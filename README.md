@@ -1,2 +1,1 @@
-# imloviy-xato
-Сайтдаги имловий хатоларни аниқлаш ва бартараф этииш учун кичик модул.
+Сайтдаги имловий хатоларни аниқлаш ва бартараф этииш учун кичик модул. Bunda imloviy xatoni belgilab CTRL+ENTER tugmalarini bosib to`g`ri so`zni belgilab jo`natasiz. Agarda sizga yoqqan bo`lsa yulduzchani bosib qo`ying 
