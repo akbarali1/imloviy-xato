@@ -1,4 +1,4 @@
-Hammamiz bilamiz saytdagi imloviy xatolar ba'zan bo`lib turadi.
+Hammamiz bilamiz saytdagi imloviy xatolar ba'zan bo'lib turadi.
 
 Bu modul saytingizda moboda xatolik bo'lsa va uni foydalanuvchilar ko'rsa matnni belgilab CTRL+ENTER tugmasini bosadi va to'g'ri matinni yozib sizga jo'natadi.
 
