@@ -2,110 +2,118 @@
 <html>
 <head>
     <meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="./fayl/css/combined.css">
+    <link rel="stylesheet" type="text/css" href="./fayl/css/combined.css">
     <link href="./fayl/css/toastr.min.css" rel="stylesheet">
-    </head>
-    <title>Saytdagi imloviy xatolarni aniqlash va o`sha imloviy xatolarni telegram botga yuborish uchun kichik kod jamlanmasi</title>
-    <style>
-        body{
-            background-color: azure;]
-            max-width: 90%;
-            height: 90%;
-            width: 90%;
-            margin: 50px;           
-        }
-    </style>
+</head>
+<title>Saytdagi imloviy xatolarni aniqlash va o`sha imloviy xatolarni telegram botga yuborish uchun kichik kod jamlanmasi</title>
+<style>
+    body {
+        background-color: azure;
+    ] max-width: 90 %;
+        height: 90%;
+        width: 90%;
+        margin: 50px;
+    }
+</style>
 <body>
-<p>Bu men Akbarali Siz buni qanday ishlashini bilish uchun db.phpga botingiz tokenini kiriting, telegram id raqamingizni ham kerakli joyga yozing  va shu so`zlardan bittasini belgilab CTRL+ENTER tugmalarini bosib to`g`ri so`zni yozib yuborish tugmasini bosing. Ha aytgancha bu mening birinchi githubga qo`ygan kodim. Githubni endi sekin asta o`rganmoqdaman. Xatolar bo`lsa kechring. Agarda sizga bu narsa yoqqan bo`lsa <a href="https://github.com/Akbar9705" target="_blank">Mening </a> profilimdagi shu kodga yulduzcha bosib qo`ying.</p>
+<p>Bu men Akbarali Siz buni qanday ishlashini bilish uchun db.phpga botingiz tokenini kiriting, telegram id raqamingizni ham kerakli joyga yozing va shu so`zlardan bittasini belgilab CTRL+ENTER tugmalarini bosib to`g`ri so`zni yozib yuborish tugmasini bosing. Ha aytgancha bu mening birinchi githubga qo`ygan kodim. Githubni endi sekin asta o`rganmoqdaman. Xatolar bo`lsa kechring. Agarda sizga bu narsa yoqqan bo`lsa <a href="https://github.com/Akbar9705" target="_blank">Mening </a> profilimdagi
+    shu kodga yulduzcha bosib qo`ying.</p>
 <div class="modal fade" id="mistakeModal" tabindex="-1" role="dialog" aria-labelledby="mistakeModalLabel" style="display: none;">
-   <div class="modal-dialog" role="document">
-   <div class="modal-content">
-   <div class="modal-header">
-   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-   <h4 class="modal-title" id="mistakeModalLabel">Орфографик хатоликлар</h4>
-   </div>
-   <div class="modal-body">
-   <form>
-   <div class="form-group">
-   <label for="error_text" class="control-label">Хатолик топилган матн:</label>
-   <textarea class="form-control" id="error_text" maxlength="40" style="resize: none" readonly=""></textarea>
-   </div>
-   <div class="form-group">
-   <label for="fixed_text" class="control-label">Таклиф қилинган матн:</label>
-   <textarea class="form-control" id="fixed_text" maxlength="150" style="resize: none"></textarea>
-   </div>
-   </form>
-   </div>
-   <div class="modal-footer">
-   <button type="button" class="btn btn-default" data-dismiss="modal">Бекор қилиш</button>
-   <img src="./fayl/rasm/input-spinner.gif" id="rg_sendMistake" align="" style="display: none;">
-   <button type="button" class="btn btn-success" id="sendMistake" data-loading-text="Илтимос кутинг ...">Жўнатиш
-   </button>
-   </div>
-   </div>
-   </div>
-   </div>
-	<script type="text/javascript" src="./fayl/js/jquery.min.js"></script>
-	<script src="./fayl/js/combined.js"></script>
-	<script src="./fayl/js/toastr.min.js"></script>
-   <script src="./fayl/js/combined(2).js"></script>
- <script type="text/javascript">
-          toastr.options = {
-          "closeButton": true,
-          "debug": true,
-          "newestOnTop": true,
-          "progressBar": true,
-         "positionClass": "toast-top-center",
-         "preventDuplicates": false,
-         "onclick": null,
-         "showDuration": "300",
-         "hideDuration": "1000",
-          "timeOut": "5000",
-          "extendedTimeOut": "1000",
-         "showEasing": "swing",
-         "hideEasing": "linear",
-         "showMethod": "fadeIn",
-         "hideMethod": "fadeOut" };
- 
-        $(document).keypress(function(e) {
-            if ((e.which == 13 || e.which == 10) && e.ctrlKey) {
-                if (window.getSelection().toString().length >= 3 && window.getSelection().toString().length <= 40) {
-                    $('#error_text').val(window.getSelection().toString());
-                    $('#fixed_text').val('');
-                    $('#mistakeModal').modal('show');
-                } else if (window.getSelection().toString() != '') {
-                    toastr["warning"]("Сиз 3 тадан 40 тагача узунликдаги  матнни танлашингиз мумкин", "Хатолик ");
-                }   }   });
-        $('#sendMistake').click(function() {
-            if ($('#fixed_text').val() == null || $('#fixed_text').val() == '') {
-                toastr["warning"]("Taklif qilingan matn mavjud emas", "Xatolik ");
-            } else {
-                $.ajax({
-                    type: 'post',
-                    url: 'db.php',
-                    dataType: 'json',
-                    data: {
-                        url_address: window.location.href,
-                        error_text: $('#error_text').val(),
-                        fixed_text: $('#fixed_text').val()    },
-                    beforeSend: function() {
-                        $("#sendMistake").button('loading');
-                        $("#rg_sendMistake").show();
-                    },
-                    success: function(data) {
-                        if (data.success) {
-                            toastr["success"](data.message, "Муваффақиятли");
-                            $('#mistakeModal').modal('hide');
-                        } else {
-                            toastr["error"](data.message, "Хатолик ");
-                        }
-                    },
-                    error: function(jqXHR, exception) {
-                        toastr['error']("HTTP Status " + jqXHR.status, "Хатолик ");   }
-                }).always(function() {
-                    $("#sendMistake").button('reset');
-                    $("#rg_sendMistake").hide();
-    });  }    });
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="mistakeModalLabel">Орфографик хатоликлар</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="error_text" class="control-label">Хатолик топилган матн:</label>
+                        <textarea class="form-control" id="error_text" maxlength="40" style="resize: none" readonly=""></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="fixed_text" class="control-label">Таклиф қилинган матн:</label>
+                        <textarea class="form-control" id="fixed_text" maxlength="150" style="resize: none"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Бекор қилиш</button>
+                <img src="./fayl/rasm/input-spinner.gif" id="rg_sendMistake" align="" style="display: none;">
+                <button type="button" class="btn btn-success" id="sendMistake" data-loading-text="Илтимос кутинг ...">Жўнатиш
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="./fayl/js/jquery.min.js"></script>
+<script src="./fayl/js/combined.js"></script>
+<script src="./fayl/js/toastr.min.js"></script>
+<script src="./fayl/js/combined(2).js"></script>
+<script type="text/javascript">
+    toastr.options = {
+        "closeButton"      : true,
+        "debug"            : true,
+        "newestOnTop"      : true,
+        "progressBar"      : true,
+        "positionClass"    : "toast-top-center",
+        "preventDuplicates": false,
+        "onclick"          : null,
+        "showDuration"     : "300",
+        "hideDuration"     : "1000",
+        "timeOut"          : "5000",
+        "extendedTimeOut"  : "1000",
+        "showEasing"       : "swing",
+        "hideEasing"       : "linear",
+        "showMethod"       : "fadeIn",
+        "hideMethod"       : "fadeOut"
+    };
+
+    $(document).keypress(function (e) {
+        if ((e.which == 13 || e.which == 10) && e.ctrlKey) {
+            if (window.getSelection().toString().length >= 3 && window.getSelection().toString().length <= 40) {
+                $('#error_text').val(window.getSelection().toString());
+                $('#fixed_text').val('');
+                $('#mistakeModal').modal('show');
+            } else if (window.getSelection().toString() != '') {
+                toastr["warning"]("Сиз 3 тадан 40 тагача узунликдаги  матнни танлашингиз мумкин", "Хатолик ");
+            }
+        }
+    });
+    $('#sendMistake').click(function () {
+        if ($('#fixed_text').val() == null || $('#fixed_text').val() == '') {
+            toastr["warning"]("Taklif qilingan matn mavjud emas", "Xatolik ");
+        } else {
+            $.ajax({
+                type      : 'post',
+                url       : 'db.php',
+                dataType  : 'json',
+                data      : {
+                    url_address: window.location.href,
+                    error_text : $('#error_text').val(),
+                    fixed_text : $('#fixed_text').val()
+                },
+                beforeSend: function () {
+                    $("#sendMistake").button('loading');
+                    $("#rg_sendMistake").show();
+                },
+                success   : function (data) {
+                    if (data.success) {
+                        toastr["success"](data.message, "Муваффақиятли");
+                        $('#mistakeModal').modal('hide');
+                    } else {
+                        toastr["error"](data.message, "Хатолик ");
+                    }
+                },
+                error     : function (jqXHR, exception) {
+                    toastr['error']("HTTP Status " + jqXHR.status, "Хатолик ");
+                }
+            }).always(function () {
+                $("#sendMistake").button('reset');
+                $("#rg_sendMistake").hide();
+            });
+        }
+    });
 </script>
 
 <!--
