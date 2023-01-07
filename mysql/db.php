@@ -5,7 +5,7 @@
 // Sayt https://uzhackersw.uz
 
 $url_addres = trim($_POST['url_address']);
-$xato_soz  = trim($_POST['error_text']);
+$xato_soz   = trim($_POST['error_text']);
 $tuzatilgan = trim($_POST['fixed_text']);
 if ($url_addres && $xato_soz && $tuzatilgan) {
     $token          = '<token>';
